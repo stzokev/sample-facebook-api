@@ -4,7 +4,7 @@ var deviceready = function() {
 
     var debug = false,
         cmdLogin = document.getElementById("cmdLogin"),
-        cmdLogout = document.getElementById("cmdLogout"),
+        cmdWipe = document.getElementById("cmdWipe"),
         cmdPost = document.getElementById("cmdPost"),
     	cmdGetFeed = document.getElementById("cmdGetFeed");
     
@@ -46,8 +46,9 @@ var deviceready = function() {
             });
     });    
     
-    cmdLogout.addEventListener("click", function() {
+    cmdWipe.addEventListener("click", function() {
         // For debugging purposes you can wipe existing cached tokens...
+        
         console.log("wipe tokens");
         jso_wipe();
     });
