@@ -20,9 +20,7 @@ var deviceready = function() {
     window.plugins.childBrowser.onLocationChange = function(url){
         url = decodeURIComponent(url);
         console.log("Checking location: " + url);
-        if (url.indexOf("logout") >= 0) {
-            return;
-        }
+
         jso_checkfortoken('facebook', url, function() {
             console.log("Closing child browser, because a valid response was detected.");
             window.plugins.childBrowser.close();
