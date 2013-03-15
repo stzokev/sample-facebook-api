@@ -6,7 +6,9 @@ var deviceready = function() {
         cmdLogin = document.getElementById("cmdLogin"),
         cmdWipe = document.getElementById("cmdWipe"),
         cmdPost = document.getElementById("cmdPost"),
-    	cmdGetFeed = document.getElementById("cmdGetFeed");
+    	cmdGetFeed = document.getElementById("cmdGetFeed"),
+        cmdDelete = document.getElementById("cmdDelete"),
+        cmdClearLog = document.getElementById("cmdClearLog");
     
     // Use ChildBrowser instead of redirecting the main page.
     jso_registerRedirectHandler(window.plugins.childBrowser.showWebPage);
@@ -18,6 +20,9 @@ var deviceready = function() {
     window.plugins.childBrowser.onLocationChange = function(url){
         url = decodeURIComponent(url);
         console.log("Checking location: " + url);
+        if (url.indexOf("logout") >= 0) {
+            return;
+        }
         jso_checkfortoken('facebook', url, function() {
             console.log("Closing child browser, because a valid response was detected.");
             window.plugins.childBrowser.close();
@@ -37,8 +42,34 @@ var deviceready = function() {
     }, {"debug": debug});
     
     // jso_dump displays a list of cached tokens using console.log if debugging is enabled.
-    jso_dump();
+    jso_dump(); 
+    
+    cmdClearLog.addEventListener("click", function() {
+        console.clear();
+    }); 
+    
+    cmdDelete.addEventListener("click", function() {
+		console.log("delete permissions");
+       
+        $.oajax({
+            type: "DELETE",
+            url: "https://graph.facebook.com/me/permissions",
+            jso_provider: "facebook",
+            jso_allowia: true,
+            dataType: 'json',
+            success: function(data) {
+                console.log("Delete response (facebook):");
+                console.log(data);
+            },
+            error: function(e) {
+                console.log(e);
+            }
+        });
 
+        console.log("wipe tokens");
+       jso_wipe();
+    });
+    
     cmdLogin.addEventListener("click", function() {
         // For debugging purposes you can wipe existing cached tokens...
         jso_ensureTokens({
@@ -110,6 +141,11 @@ console.log = function (m) {
     var resultsField = document.getElementById("result");
     resultsField.innerText += typeof m === 'string' ? m : JSON.stringify(m);
     resultsField.innerText += '\n';
+}
+
+console.clear = function () {
+    var resultsField = document.getElementById("result");
+    resultsField.innerText = "";
 }
 
 document.addEventListener('deviceready', this.deviceready, false);
