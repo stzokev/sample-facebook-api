@@ -72,6 +72,37 @@
 		}
 		return res;
 	}
+	
+
+	/*
+	 * Returns epoch, seconds since 1970.
+	 * Used for calculation of expire times.
+	 */
+	var epoch = function() {
+		return Math.round(new Date().getTime()/1000.0);
+	}
+
+
+
+	var parseQueryString = function (qs) {
+		var e,
+			a = /\+/g,  // Regex for replacing addition symbol with a space
+			r = /([^&;=]+)=?([^&;]*)/g,
+			d = function (s) { return decodeURIComponent(s.replace(a, " ")); },
+			q = qs,
+			urlParams = {};
+
+		while (e = r.exec(q))
+		   urlParams[d(e[1])] = d(e[2]);
+
+		return urlParams;
+	}
+	/*
+	 * ------ / SECTION: Utilities
+	 */
+
+
+
 
 
 
@@ -204,59 +235,7 @@
 
 
 
-	/*
-	 * ------ SECTION: Utilities
-	 */
 
-	/*
-	 * Returns a random string used for state
-	 */
-	var uuid = function() {
-		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    		var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-		    return v.toString(16);
-		});
-	}
-
-	/* 
-	 * Takes an URL as input and a params object.
-	 * Each property in the params is added to the url as query string parameters
-	 */
-	var encodeURL = function(url, params) {
-		var res = url;
-		var k, i = 0;
-		for(k in params) {
-			res += (i++ === 0 ? '?' : '&') + encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
-		}
-		return res;
-	}
-
-	/*
-	 * Returns epoch, seconds since 1970.
-	 * Used for calculation of expire times.
-	 */
-	var epoch = function() {
-		return Math.round(new Date().getTime()/1000.0);
-	}
-
-
-
-	var parseQueryString = function (qs) {
-		var e,
-			a = /\+/g,  // Regex for replacing addition symbol with a space
-			r = /([^&;=]+)=?([^&;]*)/g,
-			d = function (s) { return decodeURIComponent(s.replace(a, " ")); },
-			q = qs,
-			urlParams = {};
-
-		while (e = r.exec(q))
-		   urlParams[d(e[1])] = d(e[2]);
-
-		return urlParams;
-	}
-	/*
-	 * ------ / SECTION: Utilities
-	 */
 
 
 
@@ -480,7 +459,7 @@
 		setOptions(opts);
 		try {
 
-			var def = jso_findDefaultEntry(c);
+			var def = exp.jso_findDefaultEntry(c);
 			log("jso_configure() about to check for token for this entry", def);
 			exp.jso_checkfortoken(def);	
 
@@ -546,7 +525,7 @@
 			co;
 		
 		providerid = settings.jso_provider;
-		allowia = settings.jso_allowia || false;
+		allowia = settings.jso_allowia || false;
 		scopes = settings.jso_scopes;
 		token = api_storage.getToken(providerid, scopes);
 		co = config[providerid];
