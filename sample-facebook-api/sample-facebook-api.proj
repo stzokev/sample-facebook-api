@@ -12,8 +12,9 @@
     <iOSStatusBarStyle>Default</iOSStatusBarStyle>
     <AndroidHardwareAcceleration>false</AndroidHardwareAcceleration>
     <BundleVersion>1.0</BundleVersion>
-    <iOSDisplayName />
+    <iOSDisplayName>Icebook</iOSDisplayName>
     <AndroidVersionCode>1</AndroidVersionCode>
+    <iOSDeviceFamily>1;2</iOSDeviceFamily>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="App_Resources" />
