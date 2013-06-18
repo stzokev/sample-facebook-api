@@ -2,34 +2,39 @@
 
 var deviceready = function() {
 
-    var debug = false,
+    var debug = true,
         cmdLogin = document.getElementById("cmdLogin"),
         cmdWipe = document.getElementById("cmdWipe"),
         cmdPost = document.getElementById("cmdPost"),
-    	cmdGetFeed = document.getElementById("cmdGetFeed"),
+     cmdGetFeed = document.getElementById("cmdGetFeed"),
         cmdDelete = document.getElementById("cmdDelete"),
-        cmdClearLog = document.getElementById("cmdClearLog");
+        cmdClearLog = document.getElementById("cmdClearLog"),
+        inAppBrowserRef;
     
-    // Use ChildBrowser instead of redirecting the main page.
-    jso_registerRedirectHandler(window.plugins.childBrowser.showWebPage);
+    jso_registerRedirectHandler(function(url) {
+        inAppBrowserRef = window.open(url, "_blank");
+        inAppBrowserRef.addEventListener('loadstop', function(e){LocationChange(e.url)}, false);
+    });
 
     /*
-     * Register a handler on the childbrowser that detects redirects and
-     * lets JSO to detect incomming OAuth responses and deal with the content.
-     */
-    window.plugins.childBrowser.onLocationChange = function(url){
+* Register a handler that detects redirects and
+* lets JSO to detect incomming OAuth responses and deal with the content.
+*/
+    
+    function LocationChange(url){
+        console.log("in location change");
         url = decodeURIComponent(url);
         console.log("Checking location: " + url);
 
         jso_checkfortoken('facebook', url, function() {
-            console.log("Closing child browser, because a valid response was detected.");
-            window.plugins.childBrowser.close();
+            console.log("Closing InAppBrowser, because a valid response was detected.");
+            inAppBrowserRef.close();
         });
     };
 
     /*
-     * Configure the OAuth providers to use.
-     */
+* Configure the OAuth providers to use.
+*/
     jso_configure({
         "facebook": {
             client_id: "537761576263898",
@@ -40,14 +45,14 @@ var deviceready = function() {
     }, {"debug": debug});
     
     // jso_dump displays a list of cached tokens using console.log if debugging is enabled.
-    jso_dump(); 
+    jso_dump();
     
     cmdClearLog.addEventListener("click", function() {
         console.clear();
-    }); 
+    });
     
     cmdDelete.addEventListener("click", function() {
-		console.log("delete permissions");
+console.log("delete permissions");
        
         $.oajax({
             type: "DELETE",
@@ -73,7 +78,7 @@ var deviceready = function() {
         jso_ensureTokens({
                 "facebook": ["read_stream", "publish_stream"]
             });
-    });    
+    });
     
     cmdWipe.addEventListener("click", function() {
         // For debugging purposes you can wipe existing cached tokens...
@@ -101,7 +106,7 @@ var deviceready = function() {
                         console.log("\n");
                         console.log(item.story || [item.from.name,":\n", item.message].join("") );
                     }
-                } 
+                }
                 catch (e) {
                     console.log(e);
                 }
@@ -132,7 +137,7 @@ var deviceready = function() {
                 console.log(e);
             }
         });
-    });    
+    });
 };
 
 console.log = function (m) {
