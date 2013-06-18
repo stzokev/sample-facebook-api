@@ -3,10 +3,10 @@
   <PropertyGroup>
     <ProjectGuid>b5b6c82b-2728-4eaa-959d-b3d08337c6a4</ProjectGuid>
     <ProjectTypeGuids>{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}</ProjectTypeGuids>
-    <AppIdentifier>com.telerik.sample_facebook_api</AppIdentifier>
+    <AppIdentifier>com.telerik.samplefacebookapi</AppIdentifier>
     <ProjectName>sample-facebook-api</ProjectName>
     <IsRunnable>true</IsRunnable>
-    <TemplateAppName>Cordova220</TemplateAppName>
+    <TemplateAppName>Cordova270</TemplateAppName>
     <AndroidPermissions>android.permission.CAMERA;android.permission.VIBRATE;android.permission.ACCESS_COARSE_LOCATION;android.permission.ACCESS_FINE_LOCATION;android.permission.ACCESS_LOCATION_EXTRA_COMMANDS;android.permission.READ_PHONE_STATE;android.permission.INTERNET;android.permission.RECEIVE_SMS;android.permission.RECORD_AUDIO;android.permission.MODIFY_AUDIO_SETTINGS;android.permission.READ_CONTACTS;android.permission.WRITE_CONTACTS;android.permission.WRITE_EXTERNAL_STORAGE;android.permission.ACCESS_NETWORK_STATE;android.permission.ACCOUNT_MANAGER;android.permission.GET_ACCOUNTS;android.permission.MANAGE_ACCOUNTS;android.permission.BROADCAST_STICKY</AndroidPermissions>
     <DeviceOrientations>Portrait;Landscape</DeviceOrientations>
     <iOSStatusBarStyle>Default</iOSStatusBarStyle>
@@ -15,6 +15,7 @@
     <iOSDisplayName>Icebook</iOSDisplayName>
     <AndroidVersionCode>1</AndroidVersionCode>
     <iOSDeviceFamily>1;2</iOSDeviceFamily>
+    <iOSBackgroundMode />
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="App_Resources" />
@@ -81,7 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <CordovaPlugin Include="com.phonegap.plugins.childbrowser">
-      <Version>4.0.0</Version>
+      <Version>4.1.0</Version>
       <Name>Child Browser</Name>
     </CordovaPlugin>
   </ItemGroup>
