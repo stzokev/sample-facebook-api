@@ -22,12 +22,12 @@ var deviceready = function() {
 */
     
     function LocationChange(url){
-        console.log("in location change");
+        outputlog("in location change");
         url = decodeURIComponent(url);
-        console.log("Checking location: " + url);
+        outputlog("Checking location: " + url);
 
         jso_checkfortoken('facebook', url, function() {
-            console.log("Closing InAppBrowser, because a valid response was detected.");
+            outputlog("Closing InAppBrowser, because a valid response was detected.");
             inAppBrowserRef.close();
         });
     };
@@ -44,15 +44,15 @@ var deviceready = function() {
         }
     }, {"debug": debug});
     
-    // jso_dump displays a list of cached tokens using console.log if debugging is enabled.
+    // jso_dump displays a list of cached tokens using outputlog if debugging is enabled.
     jso_dump();
     
     cmdClearLog.addEventListener("click", function() {
-        console.clear();
+        outputclear();
     });
     
     cmdDelete.addEventListener("click", function() {
-console.log("delete permissions");
+outputlog("delete permissions");
        
         $.oajax({
             type: "DELETE",
@@ -61,15 +61,15 @@ console.log("delete permissions");
             jso_allowia: true,
             dataType: 'json',
             success: function(data) {
-                console.log("Delete response (facebook):");
-                console.log(data);
+                outputlog("Delete response (facebook):");
+                outputlog(data);
             },
             error: function(e) {
-                console.log(e);
+                outputlog(e);
             }
         });
 
-        console.log("wipe tokens");
+        outputlog("wipe tokens");
        jso_wipe();
     });
     
@@ -83,12 +83,12 @@ console.log("delete permissions");
     cmdWipe.addEventListener("click", function() {
         // For debugging purposes you can wipe existing cached tokens...
         
-        console.log("wipe tokens");
+        outputlog("wipe tokens");
         jso_wipe();
     });
     
     cmdGetFeed.addEventListener("click", function() {
-        console.log("Loading home feed...");
+        outputlog("Loading home feed...");
         // Perform the protected OAuth calls.
         $.oajax({
             url: "https://graph.facebook.com/me/home",
@@ -98,24 +98,24 @@ console.log("delete permissions");
             dataType: 'json',
             success: function(data) {
                 var i, l, item;
-                console.log("Response (facebook):");
-                //console.log(data.data);
+                outputlog("Response (facebook):");
+                //outputlog(data.data);
                 try {
                     for ( i = 0, l = data.data.length; i < l; i++) {
                         item = data.data[i];
-                        console.log("\n");
-                        console.log(item.story || [item.from.name,":\n", item.message].join("") );
+                        outputlog("\n");
+                        outputlog(item.story || [item.from.name,":\n", item.message].join("") );
                     }
                 }
                 catch (e) {
-                    console.log(e);
+                    outputlog(e);
                 }
             }
         });
     });
 
     cmdPost.addEventListener("click", function() {
-        console.log("Post to wall...");
+        outputlog("Post to wall...");
         // Perform the protected OAuth calls.
         $.oajax({
             type: "POST",
@@ -130,23 +130,23 @@ console.log("delete permissions");
                 picture: "http://www.icenium.com/iceniumImages/features-main-images/how-it-works.png"
             },
             success: function(data) {
-                console.log("Post response (facebook):");
-                console.log(data);
+                outputlog("Post response (facebook):");
+                outputlog(data);
             },
             error: function(e) {
-                console.log(e);
+                outputlog(e);
             }
         });
     });
 };
 
-console.log = function (m) {
+function  outputlog(m) {
     var resultsField = document.getElementById("result");
     resultsField.innerText += typeof m === 'string' ? m : JSON.stringify(m);
     resultsField.innerText += '\n';
 }
 
-console.clear = function () {
+function outputclear(){
     var resultsField = document.getElementById("result");
     resultsField.innerText = "";
 }
