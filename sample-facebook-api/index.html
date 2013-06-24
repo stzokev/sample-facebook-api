@@ -10,18 +10,22 @@
 		<header class="header"> 
 			<h1>Facebook Sample</h1>
 		</header>
-		
         <div class="content">
-			<button class="button" id="cmdLogin">Login</button>
-            <button class="button" id="cmdWipe">Wipe tokens</button>
-            <button class="button" id="cmdPost">Post</button>
-            <button class="button" id="cmdGetFeed">Get feed</button>
-            <button class="button" id="cmdDelete">Revoke app permisions</button>
-            <button class="button" id="cmdClearLog">Clear log</button>
-            <hr class="horizontalLine" />
-            <div id="result"></div>
+            <div class="action-area ch70">
+                <button class="button dh" id="cmdLogin">Login</button>
+                <button class="button dh" id="cmdWipe">Wipe tokens</button>
+                <button class="button dh" id="cmdPost">Post</button>
+                <button class="button dh" id="cmdGetFeed">Get feed</button>
+                <button class="button dh" id="cmdDelete">Revoke permisions</button>
+                <button class="button dh" id="cmdClearLog">Clear log</button>
+			</div>
+			<div class="result-area ch30">
+                <div class="results">
+                    <div id="result" class="desc"></div>
+                </div>
+                <div class="separator"></div>
+            </div> 
 		</div>
-        
 		<footer class="footer">
 			<div>Cordova API Samples</div>
 		</footer>
